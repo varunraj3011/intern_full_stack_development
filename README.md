@@ -1,15 +1,35 @@
 # RV Systems Private Limited — Electrical Machines Q&A Platform
 
-A Django web application where authenticated users can ask questions about
-electrical machines and receive AI-powered answers via Groq API.
+A full-stack web application where authenticated users can ask questions
+about electrical machines and receive AI-powered answers instantly.
+
+## Live Demo
+https://internfullstackdevelopment-production.up.railway.app
 
 ## Tech Stack
-- Backend: Django 5.2
-- Database: MySQL (local) / SQLite (production)
-- AI: Groq API (llama-3.3-70b-versatile)
-- Frontend: Bootstrap 5
+- **Backend:** Django 5.2
+- **Database:** MySQL (local) / PostgreSQL (production)
+- **AI Integration:** Groq API (llama-3.3-70b-versatile)
+- **Frontend:** Bootstrap 5, Bootstrap Icons
+- **Deployment:** Railway (Ubuntu-based Linux server)
 
-## Setup Instructions
+## Features
+- User registration and authentication
+- Ask questions about electrical machines
+- AI-generated answers stored in database
+- Question history per user
+- Responsive design (mobile + desktop)
+- Admin panel at /admin
+
+## Database Schema
+
+| Table | Columns |
+|-------|---------|
+| auth_user | id, username, email, password, date_joined |
+| qa_userprofile | id, user_id, bio, location, created_at |
+| qa_question | id, user_id, question, answer, created_at |
+
+## Local Setup
 
 ### 1. Clone the repository
 ```bash
@@ -29,8 +49,6 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 ```
 
-### 4. Configure environment variables
-Copy `.env.example` to `.env` and fill in your values:
 
 SECRET_KEY=your-secret-key
 DEBUG=True
@@ -42,7 +60,6 @@ DB_PASSWORD=your_mysql_password
 DB_HOST=localhost
 DB_PORT=3306
 
-
 ### 5. Create MySQL database
 ```sql
 CREATE DATABASE emqna_db CHARACTER SET utf8mb4;
@@ -53,10 +70,12 @@ CREATE DATABASE emqna_db CHARACTER SET utf8mb4;
 python manage.py migrate
 ```
 
-### 7. Seed sample data (10 users + 10 Q&A rows)
+### 7. Seed sample data
 ```bash
 python manage.py seed_data
 ```
+This creates 10 users and 10 Q&A rows.
+All seeded user passwords: `Test@1234`
 
 ### 8. Create admin user
 ```bash
@@ -67,44 +86,41 @@ python manage.py createsuperuser
 ```bash
 python manage.py runserver
 ```
-
 Visit: http://127.0.0.1:8000
 
 ## Ubuntu Server Deployment
 
 ```bash
 sudo apt update
-sudo apt install python3-pip python3-venv nginx mysql-server -y
-git clone <your-repo-url>
+sudo apt install python3-pip python3-venv nginx -y
+git clone https://github.com/varunraj3011/intern_full_stack_development.git
 cd intern_full_stack_development
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-pip install gunicorn
 python manage.py migrate
 python manage.py collectstatic
 gunicorn emqna.wsgi:application --bind 0.0.0.0:8000
 ```
 
-## Features
-- User registration and login
-- Ask questions about electrical machines
-- AI-generated answers stored in MySQL
-- Question history per user
-- Admin panel at /admin
-- Responsive design (mobile + desktop)
-
-## Database Schema
-| Table | Columns |
-|-------|---------|
-| auth_user | id, username, email, password, date_joined |
-| qa_userprofile | id, user_id, bio, location, created_at |
-| qa_question | id, user_id, question, answer, created_at |
-
 ## Sample Users (after seed_data)
-All passwords: `Test@1234`
-Users: alice_em, bob_tech, carol_eng, david_rv, eva_power...
+| Username | Password |
+|----------|----------|
+| alice_em | Test@1234 |
+| bob_tech | Test@1234 |
+| carol_eng | Test@1234 |
+| david_rv | Test@1234 |
+| eva_power | Test@1234 |
 
-## Admin Access
-URL: /admin  
-Create with: `python manage.py createsuperuser`
+## API Integration
+Uses Groq API with `llama-3.3-70b-versatile` model.
+System prompt restricts answers to electrical machines topics only.
+
+## Code Quality
+- Follows PEP 8 standards
+- All functions and classes are documented
+- Environment variables used for all sensitive data
+- Defensive error handling on all API calls
+
+### 4. Configure environment variables
+Create a `.env` file in the root folder:
