@@ -147,3 +147,4 @@ import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = []
 CSRF_TRUSTED_ORIGINS = ['https://internfullstackdevelopment-production.up.railway.app']
+LOGIN_URL = '/login/'
