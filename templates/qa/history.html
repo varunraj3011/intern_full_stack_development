@@ -1,0 +1,45 @@
+{% extends 'qa/base.html' %}
+{% block title %}History — RV Systems{% endblock %}
+
+{% block content %}
+<div class="container py-2 mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">
+      <i class="bi bi-clock-history text-primary me-2"></i>Your Questions
+    </h4>
+    <a href="{% url 'ask' %}" class="btn btn-primary btn-sm px-3">
+      <i class="bi bi-plus-circle me-1"></i>Ask New
+    </a>
+  </div>
+
+  {% for q in questions %}
+    <a href="{% url 'question_detail' q.pk %}" class="text-decoration-none">
+      <div class="card p-3 mb-3 question-card">
+        <div class="d-flex justify-content-between align-items-start">
+          <div class="flex-grow-1 me-3">
+            <p class="fw-semibold text-dark mb-1">
+              {{ q.question|truncatechars:100 }}
+            </p>
+            <p class="text-muted small mb-0">
+              {{ q.answer|truncatechars:80 }}
+            </p>
+          </div>
+          <div class="text-end text-nowrap">
+            <small class="text-muted d-block">
+              <i class="bi bi-clock me-1"></i>{{ q.created_at|timesince }} ago
+            </small>
+            <span class="badge-q mt-1 d-inline-block">View →</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  {% empty %}
+    <div class="card p-5 text-center">
+      <i class="bi bi-inbox display-3 text-muted mb-3"></i>
+      <h5 class="text-muted">No questions yet</h5>
+      <p class="text-muted">Ask your first electrical machines question!</p>
+      <a href="{% url 'ask' %}" class="btn btn-primary px-4">Ask Now</a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

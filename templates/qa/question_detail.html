@@ -1,0 +1,42 @@
+{% extends 'qa/base.html' %}
+{% block title %}Answer — RV Systems{% endblock %}
+
+{% block content %}
+<div class="container py-2">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <a href="{% url 'ask' %}" class="btn btn-outline-secondary btn-sm mb-4">
+        <i class="bi bi-arrow-left me-1"></i>Ask Another
+      </a>
+
+      <div class="card p-4 mb-3">
+        <span class="badge-q mb-2 d-inline-block">
+          <i class="bi bi-question-lg me-1"></i>Question
+        </span>
+        <p class="fw-semibold fs-5 mb-1">{{ question.question }}</p>
+        <small class="text-muted">
+          <i class="bi bi-clock me-1"></i>{{ question.created_at|date:"d M Y, H:i" }}
+        </small>
+      </div>
+
+      <div class="card p-4 mb-4">
+        <span class="badge-ai mb-3 d-inline-block">
+          <i class="bi bi-cpu me-1"></i>AI Answer
+        </span>
+        <div class="answer-box">{{ question.answer }}</div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <a href="{% url 'ask' %}" class="btn btn-primary">
+          <i class="bi bi-plus-circle me-1"></i>New Question
+        </a>
+        <a href="{% url 'history' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-clock-history me-1"></i>History
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'qa/base.html' %}
+{% block title %}RV Systems— Electrical Machines Q&A{% endblock %}
+
+{% block content %}
+<div class="hero text-center">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-3">
+      <i class="bi bi-lightning-charge-fill me-2"></i>Electrical Machines Q&A
+    </h1>
+    <p class="lead mb-4 opacity-75">
+      Ask any question about motors, generators & transformers.<br>
+      Get instant AI-powered answers.
+    </p>
+    <a href="{% url 'register' %}" class="btn btn-light btn-lg fw-bold px-5 me-3">
+      Get Started Free
+    </a>
+    <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg px-5">
+      Login
+    </a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card h-100 text-center p-4">
+        <i class="bi bi-cpu display-4 text-primary mb-3"></i>
+        <h5 class="fw-bold">AI-Powered Answers</h5>
+        <p class="text-muted">Get expert-level answers on DC motors,
+          AC machines, transformers and more — instantly.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 text-center p-4">
+        <i class="bi bi-clock-history display-4 text-primary mb-3"></i>
+        <h5 class="fw-bold">Saved History</h5>
+        <p class="text-muted">Every question and answer is saved to
+          your account for future reference.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 text-center p-4">
+        <i class="bi bi-shield-check display-4 text-primary mb-3"></i>
+        <h5 class="fw-bold">Secure & Private</h5>
+        <p class="text-muted">Your questions are private to your
+          account. Register in seconds.</p>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="fw-bold text-center mb-4">Topics You Can Ask About</h4>
+  <div class="row g-3 mb-5">
+   {% for topic in topics %}
+  <div class="col-md-4 col-sm-6">
+    <div class="card p-3 question-card">
+      <i class="bi bi-arrow-right-circle text-primary me-2"></i>
+      {{ topic }}
+    </div>
+  </div>
+{% endfor %}
+    <div class="col-md-4 col-sm-6">
+      <div class="card p-3 question-card">
+        <i class="bi bi-arrow-right-circle text-primary me-2"></i>
+        3-phase induction motors
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+      <div class="card p-3 question-card">
+        <i class="bi bi-arrow-right-circle text-primary me-2"></i>
+        DC motor back EMF
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+      <div class="card p-3 question-card">
+        <i class="bi bi-arrow-right-circle text-primary me-2"></i>
+        Transformer core losses
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+      <div class="card p-3 question-card">
+        <i class="bi bi-arrow-right-circle text-primary me-2"></i>
+        Synchronous generators
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+      <div class="card p-3 question-card">
+        <i class="bi bi-arrow-right-circle text-primary me-2"></i>
+        Motor efficiency calculation
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+      <div class="card p-3 question-card">
+        <i class="bi bi-arrow-right-circle text-primary me-2"></i>
+        Motor overheating causes
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
