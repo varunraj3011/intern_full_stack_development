@@ -1,1 +1,1 @@
-web: gunicorn emqna.wsgi --log-file -
+web: gunicorn emqna.wsgi --bind 0.0.0.0:$PORT
