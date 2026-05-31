@@ -1,65 +1,110 @@
-# voltieai-chatbot
-A Django-based interactive Q&amp;A chatbot platform for Electrical Machines using MySQL and a ChatGPT-compatible API (like Groq).
-=======
-Intern Full Stack Development Test: Electrical Machines Q&A Platform
+# RV Systems Private Limited — Electrical Machines Q&A Platform
 
-Project Overview:
+A Django web application where authenticated users can ask questions about
+electrical machines and receive AI-powered answers via Groq API.
 
-You are tasked with building a web application using Django and MySQL to create a platform for users to ask questions related to electrical machines.
-The application should pull relevant data from a ChatGPT plugin to provide accurate answers to user queries.
+## Tech Stack
+- Backend: Django 5.2
+- Database: MySQL (local) / SQLite (production)
+- AI: Groq API (llama-3.3-70b-versatile)
+- Frontend: Bootstrap 5
 
-Requirements:
+## Setup Instructions
 
-1. Backend Development:
-   * Implement a Django web application with the following features:
-    * User registration and authentication system.
-     * Ability for authenticated users to ask questions related to electrical machines.
-     * Store questions and answers in a MySQL database.
-     * Integration with a ChatGPT plugin to pull relevant data for answering questions on electrical machines.
+### 1. Clone the repository
+```bash
+git clone https://github.com/varunraj3011/intern_full_stack_development.git
+cd intern_full_stack_development
+```
 
-2. Frontend Development:
-   * Create a user-friendly interface for asking questions and displaying answers.
-   * Ensure responsiveness and usability across different devices.
+### 2. Create virtual environment
+```bash
+python -m venv venv
+venv\Scripts\activate   # Windows
+source venv/bin/activate  # Linux/Mac
+```
 
-3. ChatGPT Integration:
-   * Utilize the ChatGPT plugin to query for relevant answers based on user questions related to electrical machines.
-   * Display the retrieved answers along with the questions in the user interface.
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-4. Database Design:
-   * Design a MySQL database schema to store user information, questions, and answers related to electrical machines.
+### 4. Configure environment variables
+Copy `.env.example` to `.env` and fill in your values:
 
-5. Ubuntu OS Deployment:
-   * Deploy the application on an Ubuntu server.
-   * Ensure proper setup and configuration for smooth functioning of the application.
+SECRET_KEY=your-secret-key
+DEBUG=True
+GROQ_API_KEY=your-groq-api-key
+USE_MYSQL=True
+DB_NAME=emqna_db
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_HOST=localhost
+DB_PORT=3306
 
-Instructions:
 
-* Number of users : 10, Number of fields/columns for database: 5, Number of data/rows: 10
-* Fork this GitHub repository: [Intern Full Stack Development Test](https://github.com/vigneshranganathan/intern_full_stack_development/)
-* Complete the tasks described above within 3 days.
-* Ensure your code is well*documented and follows PEP 8 standards.
-* Use Django for backend development and MySQL as the database backend.
-* Integrate the ChatGPT plugin to pull relevant data for answering questions on electrical machines.
-* Deploy the application on an Ubuntu server (you can use any cloud provider or local setup).
-* Once completed, submit your solution by sending a pull request to the main repository.
+### 5. Create MySQL database
+```sql
+CREATE DATABASE emqna_db CHARACTER SET utf8mb4;
+```
 
-Evaluation Criteria:
+### 6. Run migrations
+```bash
+python manage.py migrate
+```
 
-Your solution will be evaluated based on the following criteria:
+### 7. Seed sample data (10 users + 10 Q&A rows)
+```bash
+python manage.py seed_data
+```
 
-1. Functionality: Does the web application meet the specified requirements? Are users able to register, ask questions related to electrical machines, and view relevant answers?
+### 8. Create admin user
+```bash
+python manage.py createsuperuser
+```
 
-2. Code Quality: Is the code well*structured, readable, and maintainable? Are best practices followed?
+### 9. Run the server
+```bash
+python manage.py runserver
+```
 
-3. Integration with ChatGPT Plugin: Is the ChatGPT plugin integrated effectively to provide relevant answers? Are queries sent to the plugin appropriately and responses handled correctly?
+Visit: http://127.0.0.1:8000
 
-4. Database Design: Is the database schema well*designed and appropriate for the task? Are relationships between entities defined correctly?
+## Ubuntu Server Deployment
 
-5. Frontend Design: Is the user interface intuitive and user*friendly? Does it provide a smooth experience for asking questions and viewing answers?
+```bash
+sudo apt update
+sudo apt install python3-pip python3-venv nginx mysql-server -y
+git clone <your-repo-url>
+cd intern_full_stack_development
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install gunicorn
+python manage.py migrate
+python manage.py collectstatic
+gunicorn emqna.wsgi:application --bind 0.0.0.0:8000
+```
 
-6. Ubuntu OS Deployment: Is the application successfully deployed on an Ubuntu server? Is it accessible and functional?
+## Features
+- User registration and login
+- Ask questions about electrical machines
+- AI-generated answers stored in MySQL
+- Question history per user
+- Admin panel at /admin
+- Responsive design (mobile + desktop)
 
-7. Documentation: Is the code adequately documented? Are setup instructions provided for deployment on an Ubuntu server?
+## Database Schema
+| Table | Columns |
+|-------|---------|
+| auth_user | id, username, email, password, date_joined |
+| qa_userprofile | id, user_id, bio, location, created_at |
+| qa_question | id, user_id, question, answer, created_at |
 
-Note: If you encounter any issues or have questions during the test, feel free to reach out for clarification or assistance.
+## Sample Users (after seed_data)
+All passwords: `Test@1234`
+Users: alice_em, bob_tech, carol_eng, david_rv, eva_power...
 
+## Admin Access
+URL: /admin  
+Create with: `python manage.py createsuperuser`
